@@ -15,7 +15,7 @@ export default function Post({ post, preview }) {
   return (
     <div>
       {router.isFallback ? (
-        <PostTitle>Loading…</PostTitle>
+        <PostBody>Loading…</PostBody>
       ) : (
         <>
           <article>

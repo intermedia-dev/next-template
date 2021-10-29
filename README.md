@@ -17,4 +17,6 @@ NEXT_PUBLIC_STATE=california
 - [x] Password Protection (middleware)
 - [x] Home page
 - [x] [slug] (aka article) page
+- [x] styled components
+- [x] markdown to html
 - [ ] Preview URL
