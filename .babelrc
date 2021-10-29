@@ -1,0 +1,14 @@
+// disabled SWC as replacement for Babel because of custom Babel configuration ".babelrc" https://nextjs.org/docs/messages/swc-disabled
+{
+  "presets": ["next/babel"],
+  "plugins": [
+    [
+      "styled-components",
+      {
+        "ssr": true,
+        "displayName": true,
+        "preprocess": false
+      }
+    ]
+  ]
+}
