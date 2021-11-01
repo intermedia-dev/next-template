@@ -1,3 +1,9 @@
+### Usage 
+
+```bash
+npx create-next-app -e https://github.com/intermedia-dev/next-template
+```
+
 ### Environment variables 
 
 ```bash

@@ -1,5 +1,5 @@
 import '../styles/globals.css'
-import {ThemeProvider, } from "styled-components";
+import {ThemeProvider } from "styled-components";
 
 let theme = {
     blackGray:{
