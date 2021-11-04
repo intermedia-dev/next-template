@@ -1,7 +1,17 @@
 import React, { createRef, useRef } from "react";
-import { getConfiguration, getDefaultMeta, getPosts } from "../lib/strapi";
+import {
+  getConfiguration,
+  getDefaultMeta,
+  getAllPostsWithSlug,
+} from "../lib/strapi";
 
 export default function ErrorPage({ posts, meta, configuration }) {
+  console.log("404 props :", {
+    posts,
+    meta,
+    configuration,
+  });
+
   const postRef = createRef();
   const searchRef = useRef(null);
 
@@ -24,9 +34,9 @@ export default function ErrorPage({ posts, meta, configuration }) {
 }
 
 export async function getStaticProps(context) {
-  let posts = await getPosts();
-  let meta = await getDefaultMeta();
-  let configuration = await getConfiguration();
+  const posts = await getAllPostsWithSlug();
+  const meta = await getDefaultMeta();
+  const configuration = await getConfiguration();
 
   return {
     props: {

@@ -4,13 +4,19 @@ import PostBody from "../components/PostBody";
 import PostHeader from "../components/PostHeader";
 import {
   getAllPostsWithSlug,
-  getPostBySlug,
+  getPostBySlugAndState,
   getDefaultMeta,
   getConfiguration,
 } from "/lib/strapi";
 import markdownToHtml from "../lib/markdownToHtml";
 
-export default function Post({ post, preview }) {
+export default function Post({ post, meta, preview, configuration }) {
+  console.log("Post props : ", {
+    post,
+    meta,
+    preview,
+    configuration,
+  });
   const router = useRouter();
   return (
     <div>
@@ -32,21 +38,21 @@ export default function Post({ post, preview }) {
 }
 
 export async function getStaticProps({ params: { slug }, preview = null }) {
-  const post = await getPostBySlug(slug, preview);
-  const content = await markdownToHtml(post.content || "");
-  const meta = await getDefaultMeta();
-  const configuration = await getConfiguration();
-
+  const post = await getPostBySlugAndState(slug, preview);
   if (!post) {
     return {
       notFound: true,
     };
   }
 
+  const content = await markdownToHtml(post.content || "");
+  const meta = await getDefaultMeta();
+  const configuration = await getConfiguration();
+
   return {
     props: {
       post: {
-        post,
+        ...post,
         content,
       },
       meta,

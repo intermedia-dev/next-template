@@ -7,6 +7,11 @@ import markdownToHtml from "../lib/markdownToHtml";
 
 export default function Home({ meta, post, configuration }) {
   // const postRef = createRef();
+  console.log("Home props :", {
+    meta,
+    post,
+    configuration,
+  });
   return (
     <article>
       <Head>
@@ -20,14 +25,19 @@ export default function Home({ meta, post, configuration }) {
 
 export async function getStaticProps({ preview = null }) {
   const configuration = await getConfiguration();
-  const post = await getPostBySlug(configuration.homepage_slug, preview);
+  if (!configuration?.home_page) {
+    return {
+      notFound: true,
+    };
+  }
+  const post = await getPostBySlug(configuration.home_page.slug, preview);
   const content = await markdownToHtml(post.content || "");
   const meta = await getDefaultMeta();
 
   return {
     props: {
       post: {
-        post,
+        ...post,
         content,
       },
       meta,
