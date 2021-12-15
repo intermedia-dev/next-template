@@ -1,8 +1,9 @@
 import React, { createRef, useRef } from "react";
 import {
+  getArticlesSlugsByState,
+  getArticleBySlugAndState,
   getConfiguration,
-  getDefaultMeta,
-  getAllPostsWithSlug,
+  getNavigation,
 } from "../lib/strapi";
 
 export default function ErrorPage({ posts, meta, configuration }) {
@@ -34,15 +35,20 @@ export default function ErrorPage({ posts, meta, configuration }) {
 }
 
 export async function getStaticProps(context) {
-  const posts = await getAllPostsWithSlug();
-  const meta = await getDefaultMeta();
+  const slugs = await getArticlesSlugsByState();
+  const posts = await Promise.all(
+    slugs.map(async ({ slug }) => await getArticleBySlugAndState(slug))
+  );
   const configuration = await getConfiguration();
+  const bottom_nav = (await getNavigation("bottom_navigation")) || [];
+  const top_nav = (await getNavigation("top_navigation")) || [];
 
   return {
     props: {
       posts,
-      meta,
       configuration,
+      bottom_nav,
+      top_nav,
     },
     revalidate: 60 * 60,
   };
